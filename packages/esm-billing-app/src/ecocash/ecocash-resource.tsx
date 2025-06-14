@@ -59,7 +59,7 @@ export const initiateStkPush = async (
           customerMsisdn: payload.PhoneNumber,
           amount: payload.Amount,
           reason: 'Payment',
-          currency: 'USD',
+          currency: 'UGX',
           sourceReference: payload.AccountReference,
         }),
       });

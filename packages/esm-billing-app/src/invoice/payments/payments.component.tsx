@@ -47,9 +47,10 @@ const Payments: React.FC<PaymentProps> = ({ bill, selectedLineItems }) => {
   const totalAmountTendered =
     formValues?.reduce((curr: number, prev) => {
       let amount = curr + Number(prev.amount);
-      if (prev.currency == '41d4680b-5289-4454-a44b-0c4008871166') {
-        amount = curr + Number(prev.amount) / currentRate.data.rate_amount;
-      }
+      // To -- do if using two currencies
+      // if (prev.currency == '41d4680b-5289-4454-a44b-0c4008871166') {
+      //   amount = curr + Number(prev.amount) / currentRate.data.rate_amount;
+      // }
       return amount;
     }, 0) ?? 0;
 

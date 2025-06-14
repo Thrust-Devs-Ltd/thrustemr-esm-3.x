@@ -33,9 +33,9 @@ export function calculateTotalAmount(lineItems: Array<LineItem>) {
 }
 
 export const convertToCurrency = (amountToConvert: number) => {
-  const formatter = new Intl.NumberFormat('en-US', {
+  const formatter = new Intl.NumberFormat('en-UG', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'UGX',
     minimumFractionDigits: 2,
   });
 
@@ -48,10 +48,10 @@ export const convertToCurrency = (amountToConvert: number) => {
   return formattedAmount;
 };
 
-export const convertToZWLCurrency = (amountToConvert: number) => {
-  const formatter = new Intl.NumberFormat('en-ZW', {
+export const convertToUSDCurrency = (amountToConvert: number) => {
+  const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'ZWL',
+    currency: 'USD',
     minimumFractionDigits: 2,
   });
 

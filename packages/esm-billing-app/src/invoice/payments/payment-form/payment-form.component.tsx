@@ -26,8 +26,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ disablePayment, amountDue, ap
   } = useFormContext<PaymentFormValue>();
   const { paymentModes, isLoading, error } = usePaymentModes();
   const [currencies] = useState([
-    { uuid: 'b3f3400f-16aa-4fdb-85b4-951e15b06aa9', name: 'usd' },
-    { uuid: '41d4680b-5289-4454-a44b-0c4008871166', name: 'zwl' },
+    { uuid: 'b3f3400f-16aa-4fdb-85b4-951e15b06aa9', name: 'UGX' },
+    //To -- do if using two currencies
+    // { uuid: '41d4680b-5289-4454-a44b-0c4008871166', name: 'zwl' },
   ]);
   const shouldShowReferenceCode = (index: number) => {
     const formValues = getValues();

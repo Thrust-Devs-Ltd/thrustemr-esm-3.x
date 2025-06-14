@@ -47,7 +47,7 @@ const Invoice: React.FC = () => {
   /**
   const [visaCardPayload, setVisaCardPayload] = useState<payloadVisa>({
     PaymentAmount: bill.totalAmount,
-    PaymentCurrency: 'USD',
+    PaymentCurrency: 'UGX',
     DefaultPayment: 'CC',
     BackURL: 'https://www.hospicare.co.zw/openmrs/spa/home/billing',
   });

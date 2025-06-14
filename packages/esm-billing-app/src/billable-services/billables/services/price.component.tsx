@@ -44,7 +44,7 @@ const PriceField: React.FC<PriceFieldProps> = ({ field, index, control, removeSe
     },
   ) => {
     field.onChange(parseFloat(e.target.value));
-    let computed = parseFloat(e.target.value) * rate.data.rate_amount;
+    let computed = parseFloat(e.target.value) / rate.data.rate_amount;
     setExchangeAmount(computed);
   };
 
@@ -88,7 +88,7 @@ const PriceField: React.FC<PriceFieldProps> = ({ field, index, control, removeSe
                 handleServicePrice(e, field);
               }}
               type="number"
-              labelText={t('usCurrency', 'USD')}
+              labelText={t('currencyType', 'UGX')}
               placeholder={t('enterPrice', 'Enter price')}
               defaultValue={field.value}
               invalid={!!errors?.servicePrices?.[index]?.price}
@@ -100,9 +100,9 @@ const PriceField: React.FC<PriceFieldProps> = ({ field, index, control, removeSe
       <ResponsiveWrapper>
         <p style={{ color: 'red' }}>
           Exchange Rate:{' '}
-          {exchangeAmount.toLocaleString('en-ZW', {
+          {exchangeAmount.toLocaleString('en-US', {
             style: 'currency',
-            currency: 'ZWL',
+            currency: 'USD',
           })}
         </p>
       </ResponsiveWrapper>

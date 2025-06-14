@@ -93,9 +93,9 @@ export const EditBillForm: React.FC<EditBillFormProps> = ({
     return <InlineLoading description={t('loading', 'Loading')} />;
   }
 
-  const formattedPrice = Intl.NumberFormat('en-US', {
+  const formattedPrice = Intl.NumberFormat('en-UG', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'UGX',
   }).format(lineItem.price);
 
   const subtitleText = `${t('currentPriceAndQuantity', 'Current price and quantity')}: ${t(

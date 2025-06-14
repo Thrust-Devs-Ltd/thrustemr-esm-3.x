@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { useBill, useDefaultFacility, useGetCurrentDollarRate } from '../billing.resource';
-import { convertToCurrency, convertToZWLCurrency } from '../helpers';
+import { convertToCurrency, convertToUSDCurrency } from '../helpers';
 import { usePaymentsReconciler } from '../hooks/use-payments-reconciler';
 import { LineItem } from '../types';
 import QuotationTable from './quotation-table.component';
@@ -53,7 +53,7 @@ const Quotation: React.FC = () => {
 
   const quotationDetails = {
     'Total Amount':
-      convertToCurrency(bill?.totalAmount) + ' Exchange Rate:' + convertToZWLCurrency(forexRate * bill?.totalAmount),
+      convertToCurrency(bill?.totalAmount) + ' Exchange Rate:' + convertToUSDCurrency(bill?.totalAmount / forexRate),
     'Quotation Number': bill.receiptNumber,
     'Date And Time': formatDatetime(parseDate(bill.dateCreated), { mode: 'standard', noToday: true }),
     'Valid Until':

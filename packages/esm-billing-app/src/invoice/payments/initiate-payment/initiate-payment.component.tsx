@@ -53,7 +53,7 @@ const InitiatePaymentDialog: React.FC<InitiatePaymentDialogProps> = ({ closeModa
 
   const pendingAmount = bill.totalAmount - bill.tenderedAmount;
 
-  const currentZWLRate = (pendingAmount * currentDollarRate.rate_amount).toLocaleString();
+  const rateExchanged = (pendingAmount / currentDollarRate.rate_amount).toLocaleString();
 
   const {
     control,
@@ -155,7 +155,7 @@ const InitiatePaymentDialog: React.FC<InitiatePaymentDialogProps> = ({ closeModa
               )}
             />
             <div className="">
-              <p>Current exchange Rate: `Z${currentZWLRate}`</p>
+              <p>Current exchange Rate: `${rateExchanged}`</p>
             </div>
           </section>
           <section>
