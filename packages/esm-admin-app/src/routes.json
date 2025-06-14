@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "backendDependencies": {
+    "kenyaemrCharts": "^1.6.7"
+  },
+  "extensions": [
+    {
+      "component": "adminLeftPanelLink",
+      "name": "admin-left-panel-link",
+      "slot": "admin-left-panel-slot"
+    },
+    {
+      "component": "userManagementLeftPannelLink",
+      "name": "user-management-left-panel-link",
+      "slot": "admin-left-panel-slot"
+    },
+    {
+      "component": "etlAdministrationLeftPannelLink",
+      "name": "etl-administration-left-panel-link",
+      "slot": "admin-left-panel-slot"
+    },
+    {
+      "component": "facilitySetupLeftPanelLink",
+      "name": "facility-setup-left-panel-link",
+      "slot": "admin-left-panel-slot"
+    }
+  ],
+  "workspaces": [
+    {
+      "name": "manage-user-workspace",
+      "component": "manageUserWorkspace",
+      "title": "Manage User Workspace",
+      "type": "other-form",
+      "canMaximize": true,
+      "width": "extra-wide"
+    },
+    {
+      "name": "user-role-scope-workspace",
+      "component": "userRoleScopeWorkspace",
+      "title": "User Rple Scope Workspace",
+      "type": "other-form",
+       "canMaximize": true,
+      "width": "extra-wide"
+    }
+  ],
+  "modals": [
+    {
+      "component": "operationConfirmationModal",
+      "name": "operation-confirmation-modal"
+    },
+    {
+      "component": "hwrConfirmationModal",
+      "name": "hwr-confirmation-modal"
+    },
+    {
+      "component": "hwrEmptyModal",
+      "name": "hwr-empty-modal"
+    },
+     {
+      "component": "hwrSyncModal",
+      "name": "hwr-syncing-modal"
+    }
+  ],
+  "pages": [
+    {
+      "component": "root",
+      "route": "admin"
+    }
+  ]
+}

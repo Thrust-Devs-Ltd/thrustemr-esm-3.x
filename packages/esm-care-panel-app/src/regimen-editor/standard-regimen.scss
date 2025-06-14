@@ -1,0 +1,74 @@
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/colors';
+@use '~@openmrs/esm-styleguide/src/vars' as var;
+
+.inputContainer {
+  margin: spacing.$spacing-05 0;
+}
+.container {
+  margin: spacing.$spacing-05;
+  background-color: var.$ui-background;
+
+  & section {
+    margin: spacing.$spacing-02 spacing.$spacing-05 0;
+  }
+}
+.sectionTitle {
+  @include type.type-style('heading-compact-02');
+  color: var.$text-02;
+  margin-bottom: spacing.$spacing-05;
+}
+
+.dateTimeSection {
+  display: flex;
+}
+
+.tablet {
+  padding: spacing.$spacing-06 spacing.$spacing-05;
+  background-color: var.$ui-02;
+}
+.errorText {
+  color: colors.$red-60;
+  font-size: 0.875rem;
+  margin-top: 0.313rem;
+}
+
+.desktop {
+  padding: 0rem;
+}
+.button {
+  height: 4rem;
+  display: flex;
+  align-content: flex-start;
+  align-items: baseline;
+  min-width: 50%;
+}
+
+.tablet {
+  padding: spacing.$spacing-06 spacing.$spacing-05;
+  background-color: var.$ui-02;
+}
+
+.linkName {
+  padding-left: 2rem;
+
+  &:active {
+    text-decoration: none;
+  }
+
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.radioButtonWrapper {
+  margin-bottom: spacing.$spacing-05;
+}
+
+.regimenTitle {
+  @include type.type-style('productive-heading-02');
+  color: colors.$gray-80;
+  margin-left: 1rem;
+}

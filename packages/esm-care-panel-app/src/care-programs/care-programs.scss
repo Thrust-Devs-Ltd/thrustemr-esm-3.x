@@ -1,0 +1,14 @@
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/colors';
+
+.careProgramButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.container {
+  border: 1px solid colors.$cool-gray-20;
+}
