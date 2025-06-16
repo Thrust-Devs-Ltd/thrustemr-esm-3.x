@@ -43,7 +43,7 @@ const Invoice: React.FC = () => {
   const [isPrinting, setIsPrinting] = useState(false);
   const { patient, isLoading: isLoadingPatient, error: patientError } = usePatient(patientUuid);
   const { bill, isLoading: isLoadingBill, error: billingError } = useBill(billUuid);
-
+  let isVisible = false;
   /**
   const [visaCardPayload, setVisaCardPayload] = useState<payloadVisa>({
     PaymentAmount: bill.totalAmount,
@@ -209,6 +209,7 @@ const Invoice: React.FC = () => {
         <Button
           onClick={handleBillPayment}
           disabled={bill?.status === 'PAID'}
+          style={{ display: isVisible ? 'inline-block' : 'none' }}
           size="sm"
           renderIcon={Wallet}
           iconDescription="Add"
@@ -220,6 +221,7 @@ const Invoice: React.FC = () => {
           onClick={handleVisaCardPayment}
           disabled={bill?.status === 'PAID'}
           size="sm"
+          style={{ display: isVisible ? 'inline-block' : 'none' }}
           kind={'secondary'}
           renderIcon={Wallet}
           iconDescription="Add"
