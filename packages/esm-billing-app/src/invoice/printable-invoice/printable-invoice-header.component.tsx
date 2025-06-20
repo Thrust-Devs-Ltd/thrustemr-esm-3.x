@@ -12,14 +12,14 @@ interface PrintableInvoiceHeaderProps {
 
 const PrintableInvoiceHeader: React.FC<PrintableInvoiceHeaderProps> = ({ patientDetails, facilityInfo }) => {
   const { t } = useTranslation();
-  const [logo, setLogo] = useState({ name: 'Thrustdevs', src: 'logo.png', alt: 'logo' });
+  const [logo, setLogo] = useState({ name: 'Thrustdevs', src: 'mwatu_logo.png', alt: 'logo' });
 
   return (
     <div className={styles.container}>
       <div className={styles.printableHeader}>
         <p className={styles.heading}>{t('invoice', 'Invoice')}</p>
         {logo?.src ? (
-          <img className={styles.img} height={60} width={250} src={logo.src} alt={logo.alt} />
+          <img className={styles.img} height={90} width={130} src={logo.src} alt={logo.alt} />
         ) : logo?.name ? (
           logo.name
         ) : (

@@ -1,12 +1,14 @@
 import React, { useCallback, useState } from 'react';
-import { Controller, FieldArrayWithId, UseFieldArrayRemove, useFormContext, Noop, RefCallBack } from 'react-hook-form';
+import { Controller, FieldArrayWithId, Noop, RefCallBack, UseFieldArrayRemove, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TrashCan, Add } from '@carbon/react/icons';
-import { Button, Dropdown, NumberInputSkeleton, TextInput, NumberInput } from '@carbon/react';
+import { Add, TrashCan } from '@carbon/react/icons';
+import { Button, Dropdown, NumberInput, NumberInputSkeleton, TextInput } from '@carbon/react';
 import { ErrorState } from '@openmrs/esm-patient-common-lib';
 import styles from './payment-form.scss';
 import { usePaymentModes } from '../../../billing.resource';
 import { PaymentFormValue, PaymentMethod } from '../../../types';
+import { useParams } from 'react-router-dom';
+import { usePatientInsuranceScheme } from '../payments.resource';
 
 type PaymentFormProps = {
   disablePayment: boolean;
@@ -24,12 +26,16 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ disablePayment, amountDue, ap
     setFocus,
     getValues,
   } = useFormContext<PaymentFormValue>();
-  const { paymentModes, isLoading, error } = usePaymentModes();
-  const [currencies] = useState([
-    { uuid: 'b3f3400f-16aa-4fdb-85b4-951e15b06aa9', name: 'UGX' },
-    //To -- do if using two currencies
-    // { uuid: '41d4680b-5289-4454-a44b-0c4008871166', name: 'zwl' },
-  ]);
+  const { patientUuid } = useParams();
+  const [currencies] = useState([{ uuid: 'b3f3400f-16aa-4fdb-85b4-951e15b06aa9', label: 'UGX' }]);
+
+  const { insurance } = usePatientInsuranceScheme(patientUuid);
+  const excludeInsurance = !(insurance?.hasInsurance ?? false);
+  const { paymentModes, isLoading, error } = usePaymentModes(true, excludeInsurance, {
+    uuid: 'beac329b-f1dc-4a33-9e7c-d95821a137a6',
+    label: 'Insurance',
+  });
+
   const shouldShowReferenceCode = (index: number) => {
     const formValues = getValues();
     const attributes = formValues?.payment?.[index]?.method?.attributeTypes ?? [];
@@ -107,9 +113,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ disablePayment, amountDue, ap
                 titleText={t('currency', 'Currency')}
                 label={t('selectCurrency', 'Select Currency')}
                 items={currencies}
-                itemToString={(item) => (item ? item.name : '')}
-                invalid={!!errors?.payment?.[index]?.method}
-                invalidText={errors?.payment?.[index]?.method?.message}
+                itemToString={(item) => (item ? item.label : '')}
+                invalid={!!errors?.payment?.[index]?.currency}
+                invalidText={errors?.payment?.[index]?.currency?.message}
               />
             )}
           />
