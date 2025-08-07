@@ -122,10 +122,11 @@ const BillingCheckInForm: React.FC<BillingCheckInFormProps> = ({ patientUuid, se
   }
 
   return (
+    <></>
+    /**
     <FormProvider {...formMethods}>
       <VisitAttributesForm setAttributes={setAttributes} />
       {hieFeatureFlags && <SHANumberValidity paymentMethod={attributes} patientUuid={patientUuid} />}
-      {/*
       {paymentMethod && (
         <section className={styles.sectionContainer}>
           <div className={styles.sectionTitle}>{t('billing', 'Billing')}</div>
@@ -142,8 +143,8 @@ const BillingCheckInForm: React.FC<BillingCheckInFormProps> = ({ patientUuid, se
           </div>
         </section>
       )}
-       */}
     </FormProvider>
+      **/
   );
 };
 
