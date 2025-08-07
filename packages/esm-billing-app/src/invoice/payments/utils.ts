@@ -111,7 +111,6 @@ export const createPaymentPayload = (
   patientUuid,
   paymentFormValues,
   remainingBalance,
-  forexRate,
   selectedBillableItems,
   timesheetDetails,
 ) => {
@@ -122,7 +121,6 @@ export const createPaymentPayload = (
   const existingPayments = payments.map((payment) => ({
     amount: payment.amount,
     amountTendered: payment.amountTendered,
-    forexRate: parseFloat(forexRate.toFixed(2)),
     attributes: payment.attributes.map((attribute) => ({
       attributeType: attribute.attributeType?.uuid,
       value: attribute.value,
@@ -134,7 +132,6 @@ export const createPaymentPayload = (
   const currentPayments = paymentFormValues.map((formValue) => ({
     amount: parseFloat(totalAmount.toFixed(2)),
     amountTendered: parseFloat(Number(formValue.amount).toFixed(2)),
-    forexRate: parseFloat(forexRate.toFixed(2)),
     attributes: formValue.method?.attributeTypes?.map((attribute) => ({
       attributeType: attribute.uuid,
       value: formValue.referenceCode,

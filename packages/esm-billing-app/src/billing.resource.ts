@@ -16,15 +16,7 @@ import useSWR from 'swr';
 import { z } from 'zod';
 import { BillingConfig } from './config-schema';
 import { extractString } from './helpers';
-import {
-  billType,
-  exchangeRate,
-  FacilityDetail,
-  MappedBill,
-  PatientInvoice,
-  PaymentMethod,
-  PaymentStatus,
-} from './types';
+import { billType, FacilityDetail, MappedBill, PatientInvoice, PaymentMethod, PaymentStatus } from './types';
 
 export const mapBillProperties = (bill: PatientInvoice): MappedBill => {
   // create base object
@@ -314,13 +306,6 @@ export const useConceptAnswers = (conceptUuid: string) => {
   const url = `${restBaseUrl}/concept/${conceptUuid}`;
   const { data, isLoading, error } = useSWR<{ data: { answers: Array<OpenmrsResource> } }>(url, openmrsFetch);
   return { conceptAnswers: data?.data?.answers, isLoading, error };
-};
-
-export const useGetCurrentDollarRate = () => {
-  const { authenticated } = useSession();
-  const url = `${restBaseUrl}/cashier/exchange-rate`;
-  const { data, isLoading } = useSWR<{ data: exchangeRate }>(authenticated ? url : null, openmrsFetch, {});
-  return { data: data?.data, isLoading: isLoading };
 };
 
 export const billingFormSchema = z.object({

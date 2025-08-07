@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { BillableFormSchema } from '../form-schemas';
 import { Controller, Noop, RefCallBack, useFormContext, type Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useGetCurrentDollarRate, usePaymentModes } from '../../../billing.resource';
+import { usePaymentModes } from '../../../billing.resource';
 import styles from './service-form.scss';
 import { ComboBox, IconButton, NumberInput, TextInput } from '@carbon/react';
 import { TrashCan } from '@carbon/react/icons';
@@ -21,8 +21,6 @@ const PriceField: React.FC<PriceFieldProps> = ({ field, index, control, removeSe
   const { paymentModes, isLoading } = usePaymentModes();
   const { watch } = useFormContext();
   const servicePrices = watch('servicePrices');
-  const rate = useGetCurrentDollarRate();
-  const [exchangeAmount, setExchangeAmount] = useState(1);
   // Filter out the payment modes that are already selected
   const availablePaymentModes = useMemo(
     () =>
@@ -44,8 +42,6 @@ const PriceField: React.FC<PriceFieldProps> = ({ field, index, control, removeSe
     },
   ) => {
     field.onChange(parseFloat(e.target.value));
-    let computed = parseFloat(e.target.value) / rate.data.rate_amount;
-    setExchangeAmount(computed);
   };
 
   return (
@@ -98,15 +94,6 @@ const PriceField: React.FC<PriceFieldProps> = ({ field, index, control, removeSe
             />
           )}
         />
-      </ResponsiveWrapper>
-      <ResponsiveWrapper>
-        <p style={{ color: 'red' }}>
-          Exchange Rate:{' '}
-          {exchangeAmount.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          })}
-        </p>
       </ResponsiveWrapper>
       <IconButton
         kind="danger--tertiary"

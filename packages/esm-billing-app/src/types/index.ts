@@ -587,10 +587,6 @@ export interface Filter {
   status?: string;
 }
 
-export interface exchangeRate {
-  rate_amount: number;
-}
-
 export interface payloadVisa {
   PaymentAmount: number;
   PaymentCurrency: string;

@@ -169,8 +169,8 @@ export const getBulkUploadPayloadFromExcelFile = (
     )
     .map((row) => {
       return {
-        name: row.name,
-        shortName: row.short_name ?? row.name,
+        name: row.name.replace(/\s*&\s*/g, ' and '),
+        shortName: row.short_name.replace(/\s*&\s*/g, ' and ') ?? row.name.replace(/\s*&\s*/g, ' and '),
         serviceType: serviceTypes.find((type) => type.uuid === row.service_type_uuid).uuid,
         servicePrices: [
           {

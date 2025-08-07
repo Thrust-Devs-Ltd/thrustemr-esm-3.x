@@ -18,7 +18,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
-import { useBill, useGetCurrentDollarRate, useDefaultFacility } from '../billing.resource';
+import { useBill, useDefaultFacility } from '../billing.resource';
 import { spaBasePath } from '../constants';
 import { convertToCurrency } from '../helpers';
 import { usePaymentsReconciler } from '../hooks/use-payments-reconciler';
@@ -38,7 +38,6 @@ interface InvoiceDetailsProps {
 const Invoice: React.FC = () => {
   const { t } = useTranslation();
   const { data: facilityInfo } = useDefaultFacility();
-  const { data: exchangeRate } = useGetCurrentDollarRate();
   const { billUuid, patientUuid } = useParams();
   const [isPrinting, setIsPrinting] = useState(false);
   const { patient, isLoading: isLoadingPatient, error: patientError } = usePatient(patientUuid);

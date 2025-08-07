@@ -23,7 +23,7 @@ import { initiateStkPush } from '../../../ecocash/ecocash-resource';
 import { MappedBill } from '../../../types';
 import { formatZimbabwePhoneNumber } from '../utils';
 import styles from './initiate-payment.scss';
-import { useGetCurrentDollarRate, useDefaultFacility } from '../../../billing.resource';
+import { useDefaultFacility } from '../../../billing.resource';
 
 const initiatePaymentSchema = z.object({
   phoneNumber: z
@@ -48,12 +48,9 @@ const InitiatePaymentDialog: React.FC<InitiatePaymentDialogProps> = ({ closeModa
   const [notification, setNotification] = useState<{ type: 'error' | 'success'; message: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [{ requestStatus }, pollingTrigger] = useRequestStatus(setNotification, closeModal, bill);
-  const { data: currentDollarRate } = useGetCurrentDollarRate();
   const { data: facilityInfo } = useDefaultFacility();
 
   const pendingAmount = bill.totalAmount - bill.tenderedAmount;
-
-  const rateExchanged = (pendingAmount / currentDollarRate.rate_amount).toLocaleString();
 
   const {
     control,
@@ -154,9 +151,6 @@ const InitiatePaymentDialog: React.FC<InitiatePaymentDialogProps> = ({ closeModa
                 </Layer>
               )}
             />
-            <div className="">
-              <p>Current exchange Rate: `${rateExchanged}`</p>
-            </div>
           </section>
           <section>
             <Button kind="secondary" className={styles.buttonLayout} onClick={closeModal}>
