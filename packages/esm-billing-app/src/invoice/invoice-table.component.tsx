@@ -62,7 +62,8 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isSelectable = true, 
     { header: 'Status', key: 'status' },
     { header: 'Quantity', key: 'quantity' },
     { header: 'Price', key: 'price' },
-    { header: 'Total', key: 'total' },
+    { header: 'Total Cost', key: 'total' },
+    { header: 'Balance', key: 'balance' },
   ];
   const processBillItem = (item) => (item?.item || item?.billableService)?.split(':')[1];
 
@@ -78,6 +79,7 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isSelectable = true, 
           quantity: item.quantity,
           price: item.price,
           total: item.price * item.quantity,
+          balance: item.balance,
         };
       }) ?? [],
     [bill.receiptNumber, filteredLineItems],
@@ -157,12 +159,14 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({ bill, isSelectable = true, 
                           {...getSelectionProps({ row })}
                           disabled={
                             tableRows[index].status === PaymentStatus.PAID ||
-                            tableRows[index].status === PaymentStatus.EXEMPTED
+                            tableRows[index].status === PaymentStatus.EXEMPTED ||
+                            tableRows[index].balance === 0
                           }
                           onChange={(checked: boolean) => handleRowSelection(row, checked)}
                           checked={
                             tableRows[index].status === PaymentStatus.PAID ||
                             tableRows[index].status === PaymentStatus.EXEMPTED ||
+                            tableRows[index].balance === 0 ||
                             Boolean(selectedLineItems?.find((item) => item?.uuid === row?.id))
                           }
                         />

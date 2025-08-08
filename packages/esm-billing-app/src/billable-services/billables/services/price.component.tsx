@@ -86,7 +86,7 @@ const PriceField: React.FC<PriceFieldProps> = ({ field, index, control, removeSe
               }}
               onWheel={(e) => e.currentTarget.blur()}
               type="number"
-              labelText={t('currencyType', 'UGX')}
+              labelText={t('enterPrice', 'Price')}
               placeholder={t('enterPrice', 'Enter price')}
               defaultValue={field.value}
               invalid={!!errors?.servicePrices?.[index]?.price}

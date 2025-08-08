@@ -66,6 +66,7 @@ export interface LineItem {
   billableService: string;
   quantity: number;
   price: number;
+  balance: number;
   priceName: string;
   priceUuid: string;
   lineItemOrder: number;
@@ -296,7 +297,6 @@ export interface Payment {
 export type FormPayment = {
   method: PaymentMethod;
   amount: string | number;
-  currency: string;
   referenceCode?: number | string;
 };
 

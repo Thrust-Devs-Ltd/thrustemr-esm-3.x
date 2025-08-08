@@ -103,10 +103,10 @@ const Invoice: React.FC = () => {
   }, [bill?.lineItems?.length]);
 
   const invoiceDetails = {
-    'Total Amount': convertToCurrency(bill?.totalAmount),
-    'Amount Tendered': convertToCurrency(bill?.tenderedAmount),
-    'Invoice Number': bill.receiptNumber,
-    'Date And Time': formatDatetime(parseDate(bill.dateCreated), { mode: 'standard', noToday: true }),
+    'Invoice Total Amount': convertToCurrency(bill?.totalAmount),
+    'Amount Paid': convertToCurrency(bill?.tenderedAmount),
+    'Due Amount': convertToCurrency(bill?.totalAmount - bill?.tenderedAmount),
+    'Invoice Date': formatDatetime(parseDate(bill.dateCreated), { mode: 'standard', noToday: true }),
     'Invoice Status': bill?.status,
   };
 

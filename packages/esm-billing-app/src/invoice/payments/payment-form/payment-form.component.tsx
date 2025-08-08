@@ -13,7 +13,7 @@ import { usePatientInsuranceScheme } from '../payments.resource';
 type PaymentFormProps = {
   disablePayment: boolean;
   amountDue: number;
-  append: (obj: { method: PaymentMethod; amount: number; currency: string; referenceCode: string }) => void;
+  append: (obj: { method: PaymentMethod; amount: number; referenceCode: string }) => void;
   fields: FieldArrayWithId<PaymentFormValue, 'payment', 'id'>[];
   remove: UseFieldArrayRemove;
 };
@@ -27,8 +27,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ disablePayment, amountDue, ap
     getValues,
   } = useFormContext<PaymentFormValue>();
   const { patientUuid } = useParams();
-  const [currencies] = useState([{ uuid: 'b3f3400f-16aa-4fdb-85b4-951e15b06aa9', label: 'UGX' }]);
-
   const { insurance } = usePatientInsuranceScheme(patientUuid);
   const excludeInsurance = !(insurance?.hasInsurance ?? false);
   const { paymentModes, isLoading, error } = usePaymentModes(true, excludeInsurance, {
@@ -43,7 +41,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ disablePayment, amountDue, ap
   };
 
   const handleAppendPaymentMode = useCallback(() => {
-    append({ method: null, amount: 0, currency: currencies[0].uuid, referenceCode: '' });
+    append({ method: null, amount: 0, referenceCode: '' });
     setFocus(`payment.${fields.length}.method`);
   }, [append, fields.length, setFocus]);
 
@@ -96,26 +94,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ disablePayment, amountDue, ap
                 itemToString={(item) => (item ? item.name : '')}
                 invalid={!!errors?.payment?.[index]?.method}
                 invalidText={errors?.payment?.[index]?.method?.message}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={`payment.${index}.currency`}
-            render={({ field }) => (
-              <Dropdown
-                {...field}
-                id="currency"
-                onChange={({ selectedItem }) => {
-                  setFocus(`payment.${index}.amount`);
-                  field.onChange(selectedItem.uuid);
-                }}
-                titleText={t('currency', 'Currency')}
-                label={t('selectCurrency', 'Select Currency')}
-                items={currencies}
-                itemToString={(item) => (item ? item.label : '')}
-                invalid={!!errors?.payment?.[index]?.currency}
-                invalidText={errors?.payment?.[index]?.currency?.message}
               />
             )}
           />

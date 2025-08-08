@@ -38,7 +38,7 @@ const PriceInfoOrder: React.FC<PriceInfoOrderProps> = ({ billableItem, error }) 
                 {t('paymentMethods', 'Payment methods')}
               </StructuredListCell>
               <StructuredListCell head className={styles.cell}>
-                {t('prices', 'Prices (Ksh)')}
+                {t('prices', 'Prices')}
               </StructuredListCell>
             </StructuredListRow>
           </StructuredListHead>

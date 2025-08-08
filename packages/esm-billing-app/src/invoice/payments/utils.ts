@@ -63,8 +63,8 @@ export const formatZimbabwePhoneNumber = (rawPhoneNumber) => {
 export const determineBillableItemPaymentStatus = (
   totalBillableItems,
   billableItem,
-  totalPaidAmount,
   fallbackPaymentStatus,
+  balance,
 ) => {
   if (totalBillableItems <= 1) {
     return fallbackPaymentStatus;
@@ -73,9 +73,7 @@ export const determineBillableItemPaymentStatus = (
   if (billableItem.paymentStatus === PaymentStatus.EXEMPTED) {
     return PaymentStatus.EXEMPTED;
   }
-
-  const itemTotalCost = billableItem.price * billableItem.quantity;
-  return totalPaidAmount >= itemTotalCost ? PaymentStatus.PAID : PaymentStatus.PENDING;
+  return balance === 0 ? PaymentStatus.PAID : PaymentStatus.PENDING;
 };
 
 /**
@@ -144,7 +142,7 @@ export const createPaymentPayload = (
   const totalPaidAmount = consolidatedPayments.reduce((sum, payment) => sum + payment.amountTendered, 0);
 
   // Process selected items and update their payment status
-  const processedSelectedBillableItems = selectedBillableItems.map((billableItem) => ({
+  const processedSelectedBillableItemsOriginal = selectedBillableItems.map((billableItem) => ({
     ...billableItem,
     billableService: extractServiceIdentifier(billableItem),
     item: extractServiceIdentifier(billableItem),
@@ -154,7 +152,36 @@ export const createPaymentPayload = (
       totalPaidAmount,
       initialPaymentStatus,
     ),
+    balance: 0,
   }));
+
+  let remainingPaidAmount = totalPaidAmount;
+
+  const processedSelectedBillableItems = selectedBillableItems.map((billableItem) => {
+    const serviceId = extractServiceIdentifier(billableItem);
+    const itemTotalCost = billableItem.price * billableItem.quantity || 0;
+    let balance: number;
+
+    if (remainingPaidAmount > 0) {
+      if (remainingPaidAmount >= itemTotalCost) {
+        balance = 0;
+        remainingPaidAmount -= itemTotalCost;
+      } else {
+        balance = itemTotalCost - remainingPaidAmount;
+        remainingPaidAmount = 0;
+      }
+    } else {
+      balance = 0;
+    }
+
+    return {
+      ...billableItem,
+      billableService: serviceId,
+      item: serviceId,
+      paymentStatus: determineBillableItemPaymentStatus(lineItems.length, billableItem, initialPaymentStatus, balance),
+      balance: balance,
+    };
+  });
 
   // Handle remaining line items based on whether there are selected items
   const remainingLineItems =
