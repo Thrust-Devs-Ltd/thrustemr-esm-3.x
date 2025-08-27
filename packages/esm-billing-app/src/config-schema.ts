@@ -33,6 +33,7 @@ export interface BillingConfig {
     enable: boolean;
     duration: number;
   };
+  serviceConceptUuid: string;
 }
 
 export const configSchema: ConfigSchema = {
@@ -200,5 +201,10 @@ export const configSchema: ConfigSchema = {
       enable: true,
       duration: 24,
     },
+  },
+  serviceConceptUuid: {
+    _type: Type.String,
+    _description: 'Billable services convSet uuid',
+    _default: '480de7e9-203d-48f8-b927-fef5b71d205f',
   },
 };

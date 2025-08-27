@@ -1,6 +1,7 @@
-import { OpenmrsResource, openmrsFetch } from '@openmrs/esm-framework';
+import { OpenmrsResource, openmrsFetch, useConfig } from '@openmrs/esm-framework';
 import useSWR from 'swr';
 import { ServiceConcept, ServiceTypesResponse } from '../types';
+import { BillingConfig } from '../config-schema';
 
 type ResponseObject = {
   results: Array<OpenmrsResource>;
@@ -14,7 +15,7 @@ export const useBillableServices = () => {
 
 export function useServiceTypes() {
   // service concept UUID containing all available services e.g lab, pharmacy, surgical etc
-  const serviceConceptUuid = `480de7e9-203d-48f8-b927-fef5b71d205f`;
+  const { serviceConceptUuid } = useConfig<BillingConfig>();
   const url = `/ws/rest/v1/concept/${serviceConceptUuid}?v=custom:(setMembers:(uuid,display,id))`;
   const { data, error, isLoading } = useSWR<{ data: ServiceTypesResponse }>(url, openmrsFetch, {});
   return { serviceTypes: data?.data.setMembers ?? [], error, isLoading };
